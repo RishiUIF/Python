@@ -1,0 +1,801 @@
+@font-face {
+  font-family: 'Brittany Signature';
+  src: url('https://db.onlinewebfonts.com/t/b4d584ed0e53ba94a815f817690faab2.woff2') format('woff2'),
+       url('https://db.onlinewebfonts.com/t/b4d584ed0e53ba94a815f817690faab2.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  width: 100%;
+}
+
+body {
+  width: 100%;
+  font-family: 'Roboto Mono', monospace;
+  background-color: #ffffff;
+  color: #2b2b2b;
+  overflow-x: hidden;
+}
+
+/* Scrollable wrapper — sits ON TOP of fixed logo (z-index: 3) */
+.main-content-wrapper {
+  position: relative;
+  z-index: 3;
+  background-color: #ffffff;
+  width: 100%;
+}
+
+.animate-logo {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 160;
+  font-family: 'Brittany Signature', 'Great Vibes', cursive;
+  font-size: clamp(5.5rem, 14vw, 11rem);
+  color: #ffffff;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  user-select: none;
+  pointer-events: none;
+  transform-origin: top left;
+}
+
+/* Hard pin for the logo once we've scrolled past the hero */
+.animate-logo.is-pinned {
+  top: 30px !important;
+  left: 20px !important;
+  transform: none !important;
+  font-size: 1.8rem !important;
+  color: #000000 !important;
+  text-shadow: 0px 0px 0px rgba(0, 0, 0, 0) !important;
+}
+
+@media (min-width: 769px) {
+  .animate-logo.is-pinned {
+    left: 30px !important;
+  }
+}
+
+.global-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 80px;
+  background-color: transparent;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 60px;
+  z-index: 165;
+  box-shadow: none;
+  border: none;
+  transition: background-color 0.1s ease;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.2rem;
+  align-items: center;
+}
+
+.nav-links a {
+  color: #ffffff;
+  text-decoration: none;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  transition: opacity 0.2s ease;
+}
+
+.nav-links a:hover {
+  opacity: 0.8;
+}
+
+/* ================= DROPDOWN MENUS ================= */
+.nav-dropdown-item {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-dropdown-item::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 16px;
+}
+
+.profile-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 12px;
+  background-color: #ffffff;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 200;
+}
+
+/* Explore dropdown aligns to the LEFT of the Explore word */
+.explore-dropdown-menu {
+  left: 0;
+  right: auto;
+  min-width: 190px;
+}
+
+/* Reveal dropdown menu on hover or when clicked (active) */
+.nav-dropdown-item:hover .profile-dropdown-menu,
+.nav-dropdown-item:focus-within .profile-dropdown-menu,
+.profile-dropdown-menu.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-login-btn {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 24px;
+  color: #000000 !important;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.95rem !important;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-decoration: none !important;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  text-shadow: none !important;
+}
+
+.dropdown-login-btn:hover {
+  transform: translateY(-1px);
+  opacity: 1 !important;
+}
+
+.hero-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: url('background.png') center/cover no-repeat;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.hero-bottom-stack {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-join {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 225px;
+  height: 46px;
+  background-color: #a4a5a0;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.btn-join:hover {
+  background-color: #b5b6b1;
+  transform: translateY(-2px);
+}
+
+.social-icons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.icon-link {
+  width: 28px;
+  height: 28px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2b2b2b;
+  text-decoration: none;
+  font-size: 0.8rem;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.icon-link:hover {
+  transform: scale(1.15);
+  background-color: #f2f2f2;
+}
+
+.about-container {
+  position: relative;
+  width: 100vw;
+  min-height: 120vh;
+  background: url('aboutbg.png') center/cover no-repeat;
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.about-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.logo-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.logo-placeholder {
+  height: 3.2rem;
+}
+
+.logo-subtitle {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #000000;
+  letter-spacing: 0.5px;
+  margin-top: -15px;
+  margin-left: -30px;
+}
+
+.about-content {
+  margin: auto;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  align-self: center;
+}
+
+.about-paragraph {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 2vw;
+  line-height: 1.65;
+  color: #2b2b2b;
+  font-weight: 400;
+  letter-spacing: -0.2px;
+  text-align: center;
+}
+
+.wire-element {
+  position: absolute;
+  left: 0;
+  width: 0%;
+  height: 4px;
+  background: linear-gradient(90deg, #00ffcc, #0099ff);
+  box-shadow: 0 0 10px #00ffcc, 0 0 20px #0099ff;
+  z-index: 10;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+/* ================= SECTION 3: VIDEO SECTION WITH ROADMAP TITLE & BUTTON ================= */
+.video-section-wrapper {
+  position: relative;
+  width: 100vw;
+  background-color: #e8e8e8;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+}
+
+.roadmap-title {
+  font-family: 'Roboto Mono', monospace;
+  font-size: clamp(1.3rem, 2.5vw, 2.2rem);
+  font-weight: 700;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: left;
+  margin-bottom: 35px;
+  margin-left: 2vw;
+}
+
+.video-section-container {
+  position: relative;
+  width: 100vw;
+  height: 29.5vw;
+  max-height: 100vh;
+  background-color: #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.video-player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.video-cta-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 22px;
+  padding-top: 35px;
+  padding-bottom: 15px;
+  background-color: #e8e8e8;
+  width: 100%;
+}
+
+.btn-request-a-build {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 38px;
+  background-color: #9e9e9e;
+  color: #ffffff;
+  font-family: 'Roboto Mono', monospace;
+  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+   text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 999px; /* Pill-shaped button matching screenshot */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+}
+
+.btn-request-a-build:hover {
+  background-color: #888888;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.btn-request-a-build i {
+  font-size: 1.1rem;
+}
+
+.video-help-text {
+  font-family: 'Roboto Mono', monospace;
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  font-weight: 500;
+  color: #000000;
+  text-align: center;
+}
+
+.help-reach-out-link {
+  color: #f27b50; /* Warm coral/orange color matching your design */
+  text-decoration: underline;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.help-reach-out-link:hover {
+  opacity: 0.8;
+}
+
+/* ================= SECTION 4: CAROUSEL ================= */
+.carousel-section-container {
+  position: relative;
+  z-index: 3;
+  width: 100vw;
+  height: 120vh;
+  background-color: #e8e8e8;
+  padding: 80px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.explore-title {
+  font-family: 'Roboto Mono', monospace;
+  font-size: clamp(1.3rem, 2.5vw, 2.2rem);
+  font-weight: 700;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: left;
+  margin-bottom: 35px;
+  margin-left: 2vw;
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  height: 480px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+}
+
+.carousel-card {
+  position: absolute;
+  width: 38vw;
+  height: 50vh;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.carousel-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-card.left-card {
+  transform: translateX(-50vw) scale(1);
+  z-index: 1;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.carousel-card.center-card {
+  transform: translateX(0) scale(1.2);
+  z-index: 3;
+  opacity: 1;
+}
+
+.carousel-card.right-card {
+  transform: translateX(50vw) scale(1);
+  z-index: 1;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.card-label {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #6e6f6d;
+  color: #ffffff;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 14px 24px;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.center-card .card-label {
+  opacity: 1;
+}
+
+/* Right Arrow Button for Carousel */
+.carousel-next-btn {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 2px solid #2b2b2b;
+  color: #2b2b2b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+}
+
+.carousel-next-btn:hover {
+  background-color: #2b2b2b;
+  color: #ffffff;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.carousel-next-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* ================= SECTION 5: FOOTER ================= */
+.footer-section-container {
+  position: relative;
+  z-index: 3;
+  width: 100vw;
+  background-color: #ffffff;
+  padding: 40px 80px 60px 80px;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-main-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 100vw;
+  margin: 0 auto;
+}
+
+.footer-left {
+  flex: 1;
+  max-width: 500px;
+}
+
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.newsletter-title {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 2vw;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 20px;
+  color: #1a1a1a;
+}
+
+.email-input-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 380px;
+  height: 48px;
+  background-color: #ffffff;
+  border: 1px solid #dcdcdc;
+  border-radius: 999px;
+  padding: 0 6px 0 20px;
+}
+
+.email-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.email-input::placeholder {
+  color: #aaaaaa;
+}
+
+.email-submit-btn {
+  width: 36px;
+  height: 36px;
+  background-color: #f5f5f5;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a1a1a;
+  transition: background-color 0.2s ease;
+}
+
+.email-submit-btn:hover {
+  background-color: #e5e5e5;
+}
+
+.connect-header {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  letter-spacing: 0.5px;
+}
+
+.connect-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 50px;
+}
+
+.connect-links a {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #555555;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.connect-links a:hover {
+  color: #000000;
+}
+
+.contact-us-link {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  text-decoration: underline;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+}
+
+.contact-us-link:hover {
+  opacity: 0.8;
+}
+
+/* Giant logo — FIXED at bottom, BEHIND everything (z-index: 1) */
+.footer-giant-logo-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 50vh;
+  z-index: 1;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+  overflow: hidden;
+}
+
+.footer-giant-logo {
+  font-family: 'Brittany Signature', 'Great Vibes', cursive;
+  font-size: clamp(8vw, 11vw, 16vw);
+  color: #000000;
+  margin: 0;
+  line-height: 1;
+  display: inline-block;
+  transform-origin: center bottom;
+  will-change: transform, opacity;
+}
+
+@media (max-width: 768px) {
+  .animate-logo {
+    font-size: clamp(3.5rem, 15vw, 6rem);
+  }
+
+  .global-navbar {
+    height: 70px;
+    padding-right: 20px;
+  }
+
+  .nav-links { gap: 1rem; }
+  .nav-links a { font-size: 0.95rem; }
+
+  .hero-bottom-stack { bottom: 20px; }
+
+  .btn-join {
+    width: 180px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .about-container { padding: 30px 20px; }
+
+  .about-header {
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .logo-placeholder { height: 2.5rem; }
+  .logo-subtitle { font-size: 1rem; }
+
+  .about-paragraph {
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+
+  .roadmap-title {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+
+  .btn-request-a-build {
+    padding: 12px 28px;
+    font-size: 0.85rem;
+  }
+
+  .video-help-text {
+    font-size: 0.85rem;
+  }
+
+  .carousel-next-btn {
+    right: 15px;
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
+  }
+
+  .carousel-card { width: 320px; height: 220px; }
+  .carousel-card.left-card { transform: translateX(-220px) scale(0.8); }
+  .carousel-card.right-card { transform: translateX(-220px) scale(0.8); }
+
+  .footer-section-container { padding: 60px 20px; }
+
+  .footer-main-content {
+    flex-direction: column;
+    gap: 40px;
+    align-items: flex-start;
+  }
+
+  .footer-right {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .footer-giant-logo-container {
+    position: relative;
+    z-index: 3;
+    height: 50vh;
+    padding: 40px 20px;
+  }
+
+  .footer-giant-logo { font-size: 3.5rem; }
+}
